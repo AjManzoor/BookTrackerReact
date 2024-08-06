@@ -1,35 +1,22 @@
-import { useEffect } from "react"
+import { BookProvider } from "../contexts/BookContext";
+import useAddBook from "../hooks/useAddBook";
+import useGetBooks from "../hooks/useGetBooks";
+import LayoutCard from "./cards/LayoutCard";
 
 function GetBooks(){
-    async function GetBooks(){
-        try {
-            const response = await fetch("https://localhost:7265/book", {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
-        
-            const result = await response.json();
-            console.log("Success:", result);
-          } catch (error) {
-            console.error("Error:", error);
-          }
-    }
 
-    useEffect(() => {
-        GetBooks()
-        console.log("run")
-
-   
-
-    })
+    const{addBook} = useAddBook();
+    const{getBooks, books} = useGetBooks();
 
     return(
-        
+      <BookProvider addBook={addBook} getBooks={getBooks} books={books}>
+            <div>
+                {books.map(function(book){
+                    return(<LayoutCard book={book}/>)
+                })}
+            </div>
+    </BookProvider>
 
-
-        <h1> These are the books</h1>
     )
 }
 
