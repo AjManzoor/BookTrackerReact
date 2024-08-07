@@ -4,15 +4,8 @@ import useDeleteBook from "../../hooks/useDeleteBook";
 
 function LayoutCard({book}){
 
-
-    const {books, setBooks} = useContext(BookContext);
-    //const{getBooks, books} = useGetBooks();
+    const {setBooks} = useContext(BookContext);
     const {deleteBook} = useDeleteBook();
-
-
-
-    console.log(books, "Boooooooooooks")
-
 
     return(
         (
@@ -20,7 +13,10 @@ function LayoutCard({book}){
             <div className='card card-height p-4 mt4'>
                 <h3>{book.bookName}</h3>
                <h3>{book.author}</h3>
-               <h1 onClick={()=> {deleteBook(book.id).then(() => {setBooks((prevBooks) => prevBooks.filter((book2) => book2.id !== book.id))}) }}>{book.id}</h1>
+               <h1 onClick={()=> {deleteBook(book.id).then((res) => {
+                if(!res) return;
+                setBooks((prevBooks) => prevBooks.filter((book2) => book2.id !== book.id))}) }}
+                >{book.id}</h1>
             </div> 
 
                

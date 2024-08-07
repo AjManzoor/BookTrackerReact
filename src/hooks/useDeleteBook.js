@@ -9,8 +9,10 @@ function useDeleteBook(){
       
           const result = await response.json();
           console.log("Success:", result);
+          return true;
         } catch (error) {
           console.error("Error:", error);
+          return false;
         }
       }
 
