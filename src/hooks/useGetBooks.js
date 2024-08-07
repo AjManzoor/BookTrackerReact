@@ -25,7 +25,7 @@ function useGetBooks(){
         getBooks()
     }, [])
 
-    return {getBooks, books}
+    return {getBooks, books, setBooks}
 
 }
 

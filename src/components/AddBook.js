@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import useAddBook from '../hooks/useAddBook';
 
 function AddBook(){
 
@@ -7,6 +8,7 @@ function AddBook(){
     const [isFicton , setIsFiction] = useState(false)
     const [startDate, setStartDate] = useState("");
     const [finishDate, setFinishDate] = useState("");
+    const {addBook} = useAddBook();
 
     useEffect(()=> {
 
@@ -30,26 +32,8 @@ function AddBook(){
         Fiction : isFicton
       };
       
-      postBook(dataToSend)
+      addBook(dataToSend)
     }
-
-    async function postBook(data) {
-        try {
-          const response = await fetch("https://localhost:7265/book", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          });
-      
-          const result = await response.json();
-          console.log("Success:", result);
-        } catch (error) {
-          console.error("Error:", error);
-        }
-      }
-    
 
     return (
       <>

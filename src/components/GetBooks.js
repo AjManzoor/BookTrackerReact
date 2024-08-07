@@ -6,10 +6,10 @@ import LayoutCard from "./cards/LayoutCard";
 function GetBooks(){
 
     const{addBook} = useAddBook();
-    const{getBooks, books} = useGetBooks();
+    const{getBooks, books, setBooks} = useGetBooks();
 
     return(
-      <BookProvider addBook={addBook} getBooks={getBooks} books={books}>
+      <BookProvider addBook={addBook} getBooks={getBooks} books={books} setBooks={setBooks}>
             <div>
                 {books.map(function(book){
                     return(<LayoutCard book={book}/>)
