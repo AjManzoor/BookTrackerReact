@@ -3,6 +3,8 @@ function useAddBook(){
     async function addBook(data) {
         try {
 
+          console.log(data)
+
           const response = await fetch("https://localhost:7265/book", {
             method: "POST",
             headers: {
@@ -16,6 +18,7 @@ function useAddBook(){
           return true;
         } catch (error) {
           console.error("Error:", error);
+          alert("failed to add")
           return false;
         }
       }

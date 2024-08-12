@@ -16,7 +16,7 @@ function LayoutCard({book}){
                <h1 onClick={()=> {deleteBook(book.id).then((res) => {
                 if(!res) return;
                 setBooks((prevBooks) => prevBooks.filter((book2) => book2.id !== book.id))}) }}
-                >{book.id}</h1>
+                >Delete</h1>
             </div> 
 
                

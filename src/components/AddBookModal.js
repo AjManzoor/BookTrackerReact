@@ -1,9 +1,64 @@
-import React, { useState } from 'react';
 import Modal from './layout/Modal';
+import AddBook from './AddBook';
+import useAddBook from '../hooks/useAddBook';
+import { BookContext } from '../contexts/BookContext';
+import { useState, useEffect, useContext } from 'react';
+import GenreComponent from './GenreComponent';
+
 
 function AddBookModal(){
 
     const [showModal, setShowModal] = useState(false);
+    const [name, setName] = useState("");
+    const [author, setAuthor] = useState("")
+    const [isFicton , setIsFiction] = useState(false)
+    const [startDate, setStartDate] = useState("");
+    const [finishDate, setFinishDate] = useState("");
+    const {addBook} = useAddBook();
+    const [genres, setGenres] = useState([0]);
+    const {books, setBooks, getBooks} = useContext(BookContext);
+
+    useEffect(()=> {
+
+      console.log(startDate)
+
+    },[startDate])
+
+    useEffect(()=> {
+
+      console.log(finishDate)
+
+    },[finishDate])
+
+    const handleSubmit = (event) => {
+      event.preventDefault();
+
+      let dataToSend = 
+      {
+        BookName : name,
+        Author : author,
+        Fiction : isFicton,
+        StartDate : startDate,
+        FinishDate : finishDate
+      };
+      
+      addBook(dataToSend).then(() => 
+      {
+          getBooks()
+          setShowModal(false);
+          resetModalValues()
+
+      })
+    }
+
+    const resetModalValues = () =>{
+        setName("")
+        setAuthor("")
+        setIsFiction(false)
+        setStartDate("");
+        setFinishDate("");
+        setGenres([0])
+    }
 
     const openModal = () => {
       setShowModal(true);
@@ -11,7 +66,21 @@ function AddBookModal(){
   
     const closeModal = () => {
       setShowModal(false);
+      resetModalValues()
     };
+
+    const handleAddGenre = (event) => {
+      event.preventDefault();
+      const sortedGenres = genres.sort((a, b) => a - b);
+      const largestValue = parseInt(sortedGenres[sortedGenres.length - 1])
+      setGenres([...genres, largestValue + 1])
+
+    }
+
+    const deleteGenre = (id) => {
+      const newGenres = genres.filter(item => item !== id);
+      setGenres(newGenres)
+    }
   
     return (
       <div className="App">
@@ -20,6 +89,58 @@ function AddBookModal(){
         <Modal show={showModal} onClose={closeModal}>
           <h2>Modal Title</h2>
           <p>This is the content inside the modal.</p>
+          <form onSubmit={handleSubmit}>
+          <label>Enter book name:
+            <input 
+              type="text" 
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </label>
+          <br></br>
+          <label>Enter author:
+            <input 
+              type="text" 
+              value={author}
+              onChange={(e) => setAuthor(e.target.value)}
+            />
+          </label>
+          <br></br>
+          <label> Fiction?
+        <input
+          type="checkbox"
+          checked={isFicton}
+          onChange={e => setIsFiction(!isFicton)}
+        />
+      </label>
+      <br></br>
+      <label> Date Started
+      <input aria-label="Date" 
+      type="date" 
+      onChange={(e) => setStartDate(e.target.value)}
+      />
+      </label>
+      <br></br>
+      <label> Date Finished
+      <input aria-label="Date" 
+      type="date"
+      onChange={(e) => setFinishDate(e.target.value)}
+      />
+      </label>
+
+      <br></br>
+
+    {console.log(genres, "genres")}
+
+    {genres.map((item, index) => 
+      
+        <GenreComponent key={index} id={item} deleteGenre={deleteGenre}></GenreComponent>
+    )}
+    <button onClick={(e) => {handleAddGenre(e)}}>Add Genre</button>
+
+      <br></br>
+          <input type="submit" />
+        </form>
         </Modal>
       </div>
     );

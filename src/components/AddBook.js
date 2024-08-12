@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import useAddBook from '../hooks/useAddBook';
 
 function AddBook(){
@@ -29,7 +29,8 @@ function AddBook(){
       {
         BookName : name,
         Author : author,
-        Fiction : isFicton
+        Fiction : isFicton,
+        StartDate : startDate,
       };
       
       addBook(dataToSend)

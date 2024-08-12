@@ -23,7 +23,12 @@ function useGetBooks(){
 
     useEffect(() => {
         getBooks()
+        console.log("again")
     }, [])
+
+    useEffect(() => {
+      console.log("books changed")
+  }, [books])
 
     return {getBooks, books, setBooks}
 
