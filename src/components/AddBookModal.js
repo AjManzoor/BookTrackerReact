@@ -27,8 +27,6 @@ function AddBookModal(){
 
     useEffect(()=> {
 
-      console.log("rerenderd ")
-
     },[])
 
 
@@ -90,7 +88,7 @@ function AddBookModal(){
 
     const addGenreValue = (id) =>{
 
-      const valueToAdd = {id : id, value : "test"}
+      const valueToAdd = {id : id, value : ""}
       const newGenreValues = [...genreValues,valueToAdd];
       setGenreValues(newGenreValues)
     }

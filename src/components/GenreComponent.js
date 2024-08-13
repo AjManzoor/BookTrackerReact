@@ -1,6 +1,12 @@
 import { useEffect, useRef } from "react";
+import { useContext } from "react";
+import { BookContext } from "../contexts/BookContext";
+
 
 function GenreComponent({id, deleteGenre, addGenreValue, updateGenreValue}){
+
+    const {genres} = useContext(BookContext);
+    console.log(genres, "genres")
 
     const hasAddedValue = useRef(false);
 
@@ -16,10 +22,12 @@ function GenreComponent({id, deleteGenre, addGenreValue, updateGenreValue}){
     return(
 <label> Add Genre
     <select name="cars" id="cars" onChange={(e) => updateGenreValue(id,e.target.value)}>
-      <option value="volvo">Volvo</option>
-      <option value="saab">Saab</option>
-      <option value="mercedes">Mercedes</option>
-      <option value="audi">Audi</option>
+    <option value="">Please select an option</option>
+        {genres.map((genre) => 
+            <option key={genre.id} value={genre.id}>{genre.genreName}</option>
+        )}
+
+      
     </select>
 
      {id !== 0?  <button onClick={(e) => { 
