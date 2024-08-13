@@ -1,5 +1,4 @@
 import Modal from './layout/Modal';
-import AddBook from './AddBook';
 import useAddBook from '../hooks/useAddBook';
 import { BookContext } from '../contexts/BookContext';
 import { useState, useEffect, useContext } from 'react';
@@ -16,19 +15,22 @@ function AddBookModal(){
     const [finishDate, setFinishDate] = useState("");
     const {addBook} = useAddBook();
     const [genres, setGenres] = useState([0]);
+    const [genreValues, setGenreValues] = useState([])
     const {books, setBooks, getBooks} = useContext(BookContext);
 
     useEffect(()=> {
 
-      console.log(startDate)
+      console.log(genreValues)
 
-    },[startDate])
+    },[genreValues])
+
 
     useEffect(()=> {
 
-      console.log(finishDate)
+      console.log("rerenderd ")
 
-    },[finishDate])
+    },[])
+
 
     const handleSubmit = (event) => {
       event.preventDefault();
@@ -58,6 +60,7 @@ function AddBookModal(){
         setStartDate("");
         setFinishDate("");
         setGenres([0])
+        setGenreValues([])
     }
 
     const openModal = () => {
@@ -80,6 +83,21 @@ function AddBookModal(){
     const deleteGenre = (id) => {
       const newGenres = genres.filter(item => item !== id);
       setGenres(newGenres)
+      const newGenreValues = genreValues.filter(item => item.id !== id);
+      setGenreValues(newGenreValues);
+
+    }
+
+    const addGenreValue = (id) =>{
+
+      const valueToAdd = {id : id, value : "test"}
+      const newGenreValues = [...genreValues,valueToAdd];
+      setGenreValues(newGenreValues)
+    }
+
+    const updateGenreValue = (id, value) => {
+
+      setGenreValues((items) => items.map((item) => item.id === id ?  {...item, ...{id : id, value : value}} : item ))
     }
   
     return (
@@ -134,7 +152,12 @@ function AddBookModal(){
 
     {genres.map((item, index) => 
       
-        <GenreComponent key={index} id={item} deleteGenre={deleteGenre}></GenreComponent>
+        <GenreComponent key={index} id={item} 
+          deleteGenre={deleteGenre} 
+          addGenreValue={addGenreValue}
+          updateGenreValue={updateGenreValue}
+        >
+        </GenreComponent>
     )}
     <button onClick={(e) => {handleAddGenre(e)}}>Add Genre</button>
 
