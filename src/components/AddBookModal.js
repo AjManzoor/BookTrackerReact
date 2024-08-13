@@ -33,13 +33,18 @@ function AddBookModal(){
     const handleSubmit = (event) => {
       event.preventDefault();
 
+      const genreValueArr = genreValues.map((genre) => genre.value)
+
+      console.log(genreValueArr, "gva")
+
       let dataToSend = 
       {
         BookName : name,
         Author : author,
         Fiction : isFicton,
         StartDate : startDate,
-        FinishDate : finishDate
+        FinishDate : finishDate,
+        Genres : genreValueArr     
       };
       
       addBook(dataToSend).then(() => 
@@ -100,11 +105,10 @@ function AddBookModal(){
   
     return (
       <div className="App">
-        <button onClick={openModal}>Open Modal</button>
+        <button onClick={openModal}>Add Book</button>
   
         <Modal show={showModal} onClose={closeModal}>
-          <h2>Modal Title</h2>
-          <p>This is the content inside the modal.</p>
+          <h2>Add book</h2>
           <form onSubmit={handleSubmit}>
           <label>Enter book name:
             <input 
