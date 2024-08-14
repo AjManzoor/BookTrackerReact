@@ -3,6 +3,7 @@ import useAddBook from '../hooks/useAddBook';
 import { BookContext } from '../contexts/BookContext';
 import { useState, useEffect, useContext } from 'react';
 import GenreComponent from './GenreComponent';
+import StarsRatingComponent from './StarsRatingComponent';
 
 
 function AddBookModal(){
@@ -17,6 +18,7 @@ function AddBookModal(){
     const [genres, setGenres] = useState([0]);
     const [genreValues, setGenreValues] = useState([])
     const {books, setBooks, getBooks} = useContext(BookContext);
+    const [rating, setRating] = useState(0);
 
     useEffect(()=> {
 
@@ -64,6 +66,7 @@ function AddBookModal(){
         setFinishDate("");
         setGenres([0])
         setGenreValues([])
+        setRating(0)
     }
 
     const openModal = () => {
@@ -162,6 +165,9 @@ function AddBookModal(){
         </GenreComponent>
     )}
     <button onClick={(e) => {handleAddGenre(e)}}>Add Genre</button>
+
+    <h3>Rating: <StarsRatingComponent starsNum={5} rating={rating} setRating={setRating}></StarsRatingComponent></h3>
+    <br></br>
 
       <br></br>
           <input type="submit" />

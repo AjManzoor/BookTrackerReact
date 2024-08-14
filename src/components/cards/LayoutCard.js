@@ -17,9 +17,7 @@ function LayoutCard({book}){
                 if(!res) return;
                 setBooks((prevBooks) => prevBooks.filter((book2) => book2.id !== book.id))}) }}
                 >Delete</h1>
-            </div> 
-
-               
+            </div>
         </div>
         )
     )
